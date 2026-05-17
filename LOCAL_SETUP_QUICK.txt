@@ -1,0 +1,263 @@
+================================================================================
+          SLOTCUT LOCAL DEVELOPMENT - QUICK START VISUAL GUIDE
+================================================================================
+
+YOUR CURRENT SETUP:
+  ✓ Code downloaded & extracted
+  ✓ Supabase account with credentials
+  ✓ VS Code installed (for frontend)
+  ✓ STS installed (for backend)
+  ✓ GitHub repo ready
+
+================================================================================
+                           WHAT YOU NEED TO DO
+================================================================================
+
+                    FRONTEND (Next.js + React)
+                          VS CODE
+                               ↓
+   Step 1: pnpm install        (download dependencies)
+   Step 2: Create .env.local   (with API URL)
+   Step 3: pnpm dev            (start dev server)
+   Result: http://localhost:3000
+
+
+                    BACKEND (Spring Boot + Java)
+                         SPRING TOOL SUITE
+                               ↓
+   Step 1: Import slotcut-backend into STS
+   Step 2: Setup application.yml with Supabase creds
+   Step 3: Run migrations (V1-V5 SQL files)
+   Step 4: Run as Spring Boot App
+   Result: http://localhost:8080
+
+
+                  DATABASE (PostgreSQL)
+                      SUPABASE.COM
+                               ↓
+   Step 1: Already have credentials (you provided them!)
+   Step 2: Run 5 migration files
+   Result: Tables created with sample data
+
+================================================================================
+                      THREE TERMINALS YOU NEED
+================================================================================
+
+TERMINAL 1 (Frontend):
+  $ cd /path/to/slotcut-app
+  $ pnpm install
+  $ pnpm dev
+  
+  Output: http://localhost:3000 ✓
+
+TERMINAL 2 (Backend in STS):
+  • Right-click slotcut-backend
+  • Run As → Spring Boot App
+  • Wait 10-15 seconds
+  
+  Output: http://localhost:8080 ✓
+
+DATABASE (Supabase):
+  • Already running (no terminal needed)
+  • Connection pooling at: aws-1-ap-south-1.pooler.supabase.com:6543
+
+================================================================================
+                      COMPLETE FLOW DIAGRAM
+================================================================================
+
+USER BROWSER
+    ↓
+http://localhost:3000 (Next.js Frontend)
+    ↓
+http://localhost:8080/api (Spring Boot Backend)
+    ↓
+aws-1-ap-south-1.pooler.supabase.com (PostgreSQL Database)
+
+
+All three running locally on your machine!
+
+================================================================================
+                    STEP-BY-STEP EXECUTION ORDER
+================================================================================
+
+PHASE 1: DATABASE (5 min)
+  ✓ Supabase account created
+  ✓ Run 5 migration SQL files
+  → Tables are ready
+
+PHASE 2: BACKEND (10 min)
+  ✓ Import slotcut-backend into STS
+  ✓ Update application.yml with DB creds
+  ✓ Run Spring Boot
+  → API is ready at localhost:8080
+
+PHASE 3: FRONTEND (5 min)
+  ✓ Open slotcut-app in VS Code
+  ✓ Run pnpm install
+  ✓ Create .env.local
+  ✓ Run pnpm dev
+  → App is ready at localhost:3000
+
+TOTAL TIME: ~20 minutes to full setup
+
+================================================================================
+                       WHAT TO TEST AFTER
+================================================================================
+
+STUDENT FLOW:
+  1. Go to http://localhost:3000
+  2. See landing page with dark theme
+  3. Click "Book Now"
+  4. See 2 salons listed
+  5. Click on a salon
+  6. Select a service
+  7. Select a time slot
+  8. Enter name & phone
+  9. Complete booking
+  10. Get booking ID confirmation
+
+OWNER FLOW:
+  1. Click menu → Owner Login
+  2. Phone: 9876543210
+  3. PIN: 1234
+  4. See dashboard with bookings
+  5. Click "Manage Slots"
+  6. Toggle slots on/off
+
+API ENDPOINTS:
+  1. GET http://localhost:8080/api/salons
+     → Should return JSON with 2 salons
+  
+  2. GET http://localhost:8080/api/salons/salon-1
+     → Should return salon details
+  
+  3. GET http://localhost:8080/api/salons/salon-1/slots?date=2024-05-20&serviceId=service-1
+     → Should return available slots
+
+================================================================================
+                       EXACT COMMANDS TO RUN
+================================================================================
+
+FRONTEND SETUP:
+  cd ~/v0-project                  (or wherever you extracted)
+  npm install -g pnpm             (if not installed)
+  pnpm install                     (download dependencies - takes 2-3 min)
+  
+Then create file: .env.local
+  NEXT_PUBLIC_API_URL=http://localhost:8080/api
+  NEXT_PUBLIC_SUPABASE_URL=https://kcjqgtfrsenbuiahnozb.supabase.co
+  
+Then run:
+  pnpm dev                         (starts at http://localhost:3000)
+
+BACKEND SETUP (IN STS):
+  1. File → Import
+  2. Gradle → Existing Gradle Project
+  3. Choose: slotcut-backend folder
+  4. Wait for indexing (2-3 minutes)
+  5. Right-click → Run As → Spring Boot App
+  6. Wait for startup (10-15 seconds)
+  7. Check console for: "Tomcat started on port(s): 8080"
+
+DATABASE SETUP (IN SUPABASE):
+  1. Go to https://supabase.com/dashboard
+  2. Select your project
+  3. SQL Editor → New Query
+  4. Copy from: slotcut-backend/src/main/resources/db/migration/V1__Initial_Schema.sql
+  5. Run the query
+  6. Repeat for V2, V3, V4, V5
+
+================================================================================
+                    EXPECTED RESULTS CHECKLIST
+================================================================================
+
+FRONTEND RUNNING:
+  ✓ VS Code terminal shows: "✓ Ready in X seconds"
+  ✓ Browser shows: SlotCut landing page
+  ✓ Dark background with saffron orange buttons
+  ✓ "Book Now" button is clickable
+
+BACKEND RUNNING:
+  ✓ STS console shows: "Tomcat started on port(s): 8080"
+  ✓ Shows: "Started SlotcutApplication in X seconds"
+  ✓ curl http://localhost:8080/api/salons returns JSON
+  ✓ No ERROR messages in console
+
+DATABASE RUNNING:
+  ✓ Supabase shows: 8 tables created
+  ✓ Can query: SELECT * FROM salons (returns 2 rows)
+  ✓ Can query: SELECT * FROM services (returns 6 rows)
+  ✓ Foreign keys are working
+
+INTEGRATED TESTING:
+  ✓ Frontend loads data from backend
+  ✓ Can complete full booking
+  ✓ Booking ID appears on confirmation
+  ✓ Owner can login
+  ✓ Owner dashboard shows bookings
+
+================================================================================
+                    IF SOMETHING DOESN'T WORK
+================================================================================
+
+Frontend won't start?
+  → Check Node.js is installed: node --version
+  → Try: npm install -g pnpm
+  → Try: pnpm install --force
+  → Delete node_modules: rm -rf node_modules
+  → Start again: pnpm install && pnpm dev
+
+Backend won't start?
+  → Check Java is installed: java -version
+  → Check STS is working: Try File → New → Spring Starter Project
+  → Check Supabase credentials in application.yml
+  → Try: ./gradlew clean build
+
+Database won't connect?
+  → Check your IP is whitelisted: Supabase → Settings → Database
+  → Try direct connection: psql postgresql://postgres:password@host:5432/postgres
+  → Check credentials are correct
+  → Restart PostgreSQL if possible
+
+Frontend can't reach backend?
+  → Check backend is running: curl http://localhost:8080/api/salons
+  → Check .env.local has: NEXT_PUBLIC_API_URL=http://localhost:8080/api
+  → Check browser DevTools → Network → look for failed API calls
+  → Restart both frontend and backend
+
+================================================================================
+                       ONE MORE THING
+================================================================================
+
+READ THIS FILE: LOCAL_DEVELOPMENT_SETUP.md
+
+It has:
+  • Complete step-by-step instructions
+  • Pictures of what to expect
+  • Troubleshooting for each step
+  • Testing checklist
+  • Database queries to verify
+  • Debugging tips
+
+If anything goes wrong, check that file first!
+
+================================================================================
+                    READY TO GET STARTED?
+================================================================================
+
+1. Open LOCAL_DEVELOPMENT_SETUP.md and follow it
+2. Get everything running locally
+3. Test the complete flow
+4. Take screenshots showing it working
+5. Come back and show me
+
+Then we move to ONLINE DEPLOYMENT:
+  → Push frontend to Vercel
+  → Push backend to Railway
+  → Database already on Supabase
+  → Connect everything
+  → Go LIVE! 🚀
+
+YOU GOT THIS! Let me know when you have all three running! 💪
+
+================================================================================

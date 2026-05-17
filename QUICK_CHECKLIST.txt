@@ -1,0 +1,225 @@
+================================================================================
+                    SLOTCUT DEPLOYMENT - QUICK CHECKLIST
+================================================================================
+
+COMPLETE THESE STEPS IN ORDER - Share results with me after each step
+
+================================================================================
+PHASE 1: GITHUB SETUP (5 min)
+================================================================================
+
+STEP 1: Create GitHub Repository
+[ ] Go to https://github.com/new
+[ ] Name it: slotcut-app
+[ ] Set to PUBLIC
+[ ] Create repository
+[ ] SHARE WITH ME: Your GitHub URL
+    Example: https://github.com/username/slotcut-app
+
+STEP 2: Push Code to GitHub
+[ ] Run: cd /path/to/slotcut-folder
+[ ] Run: git init
+[ ] Run: git add .
+[ ] Run: git commit -m "Initial commit"
+[ ] Run: git remote add origin [YOUR-GITHUB-URL]
+[ ] Run: git branch -M main
+[ ] Run: git push -u origin main
+[ ] SHARE WITH ME: Screenshot of GitHub showing your code uploaded
+
+================================================================================
+PHASE 2: FRONTEND DEPLOYMENT (10 min)
+================================================================================
+
+STEP 3: Deploy to Vercel
+[ ] Go to https://vercel.com
+[ ] Sign up with GitHub
+[ ] Click "Import Project"
+[ ] Select your slotcut-app repository
+[ ] Click "Deploy"
+[ ] Wait 2-3 minutes for deployment
+[ ] SHARE WITH ME: 
+    - Vercel frontend URL (like: https://slotcut-frontend-xyz.vercel.app)
+    - Screenshot of "Deployment Successful"
+
+================================================================================
+PHASE 3: DATABASE SETUP (10 min)
+================================================================================
+
+STEP 4: Create Supabase Database
+[ ] Go to https://supabase.com
+[ ] Sign up with GitHub
+[ ] Create new project "slotcut-db"
+[ ] Save your database password (strong password!)
+[ ] Wait 2-3 minutes for initialization
+[ ] Go to SQL Editor
+[ ] Run migration file: V1__Initial_Schema.sql
+[ ] Run migration file: V2__Add_Sample_Data.sql
+[ ] Run migration file: V3__Add_JWT_Token_Table.sql
+[ ] Run migration file: V4__Add_Rating_and_Reviews.sql
+[ ] Run migration file: V5__Add_Email_Notifications.sql
+[ ] SHARE WITH ME:
+    - Supabase Host: xxxxx.supabase.co
+    - Supabase Password: [your-password]
+    - Username: postgres
+    - Screenshot showing all 5 migrations completed
+    - Screenshot showing database tables created
+
+================================================================================
+PHASE 4: BACKEND DEPLOYMENT (15 min)
+================================================================================
+
+STEP 5: Deploy to Railway
+[ ] Go to https://railway.app
+[ ] Sign up with GitHub
+[ ] Create new project "Deploy from GitHub"
+[ ] Select your slotcut-app repository
+[ ] Add service: GitHub repo
+[ ] Configure:
+    - Root Directory: slotcut-backend
+    - Build Command: ./gradlew build
+    - Start Command: java -jar build/libs/slotcut-backend-0.0.1-SNAPSHOT.jar
+[ ] Add Environment Variables:
+    - SPRING_DATASOURCE_URL: jdbc:postgresql://HOST:5432/postgres
+    - SPRING_DATASOURCE_USERNAME: postgres
+    - SPRING_DATASOURCE_PASSWORD: [your-password]
+    - JWT_SECRET: [create-random-32-char-key]
+    - SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+[ ] Click Deploy
+[ ] Wait 5-7 minutes for build
+[ ] SHARE WITH ME:
+    - Railway backend URL (like: https://slotcut-backend-xyz.railway.app)
+    - Screenshot of deployment success
+    - All environment variables you set
+
+================================================================================
+PHASE 5: CONNECT EVERYTHING (10 min)
+================================================================================
+
+STEP 6: Update Vercel Environment Variables
+[ ] Go to https://vercel.com/dashboard
+[ ] Click on slotcut-frontend project
+[ ] Go to Settings → Environment Variables
+[ ] Add variable: NEXT_PUBLIC_API_URL = [YOUR-RAILWAY-URL]
+[ ] Click Save
+[ ] Go to Deployments tab
+[ ] Click three dots on latest deployment
+[ ] Select "Redeploy"
+[ ] Wait 2-3 minutes
+[ ] SHARE WITH ME:
+    - Screenshot showing NEXT_PUBLIC_API_URL set in Vercel
+    - Confirmation that redeployment completed
+
+================================================================================
+PHASE 6: TESTING (10 min)
+================================================================================
+
+STEP 7: Test Frontend
+[ ] Open your Vercel URL in browser
+[ ] See SlotCut landing page: YES/NO
+[ ] Click "Book Now"
+[ ] See salons list: YES/NO
+[ ] Click on a salon
+[ ] See services: YES/NO
+[ ] SHARE WITH ME:
+    - Screenshots of home page, salons list, services page
+
+STEP 8: Test Backend API
+[ ] Open: [YOUR-RAILWAY-URL]/api/salons
+[ ] See JSON response: YES/NO
+[ ] Can read salon data: YES/NO
+[ ] SHARE WITH ME:
+    - Screenshot of JSON response
+
+STEP 9: Test Authentication
+[ ] Go to frontend
+[ ] Click menu (hamburger icon)
+[ ] Click "Owner Login"
+[ ] Enter: Phone = 9876543210, PIN = 1234
+[ ] See dashboard: YES/NO
+[ ] See bookings list: YES/NO
+[ ] SHARE WITH ME:
+    - Screenshot of owner dashboard
+
+STEP 10: Test Complete Booking
+[ ] Go to frontend home
+[ ] Click "Book Now"
+[ ] Select salon
+[ ] Select service
+[ ] Select time slot
+[ ] Enter name and email
+[ ] Click "Book Now"
+[ ] See confirmation with booking ID: YES/NO
+[ ] SHARE WITH ME:
+    - Screenshot of booking confirmation page
+
+STEP 11: Check Database
+[ ] Go to Supabase
+[ ] Open SQL Editor
+[ ] Run: SELECT * FROM bookings;
+[ ] See your test booking: YES/NO
+[ ] SHARE WITH ME:
+    - Screenshot showing booking in database
+
+================================================================================
+FINAL STEP: YOU'RE LIVE!
+================================================================================
+
+STEP 12: Document Your Live URLs
+[ ] Frontend URL: https://YOUR-VERCEL-URL
+[ ] Backend URL: https://YOUR-RAILWAY-URL
+[ ] Database: Supabase (internal)
+
+SHARE WITH ME:
+- All three URLs
+- Screenshots of everything working
+- Any issues encountered
+
+================================================================================
+                            SUCCESS CHECKLIST
+================================================================================
+
+Once ALL steps are complete, you have:
+
+✅ GitHub repository with all code
+✅ Vercel frontend deployment (LIVE)
+✅ Railway backend deployment (LIVE)
+✅ Supabase database (LIVE)
+✅ All systems connected (LIVE)
+✅ Complete booking flow working (TESTED)
+✅ Owner dashboard working (TESTED)
+✅ Database storing data (VERIFIED)
+✅ Production application (READY)
+
+RESULT: Your salon booking app is LIVE on the internet! 🚀
+
+================================================================================
+                            SHARING FORMAT
+================================================================================
+
+After each STEP, send me:
+
+STEP [NUMBER] COMPLETE
+Status: DONE / FAILED
+Results:
+- URL: [if applicable]
+- What worked: [describe]
+- Issues: [if any]
+- Screenshots: [attach]
+
+Example:
+STEP 3 COMPLETE
+Status: DONE
+Results:
+- URL: https://slotcut-frontend-abc123.vercel.app
+- Frontend deployed successfully
+- Took 3 minutes
+- No issues
+- [screenshot attached]
+
+================================================================================
+
+READY TO START? Begin with STEP 1 and let me know when you've created the GitHub repo!
+
+I'll help you through every step until your app is LIVE.
+
+================================================================================
